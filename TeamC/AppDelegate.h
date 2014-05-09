@@ -6,9 +6,7 @@
 //  Copyright (c) 2014年 Unko. All rights reserved.
 //
 
-//  test
-//  test2
-//  test3-commit
+//  branchtest2
 
 #import <UIKit/UIKit.h>
 
