@@ -7,10 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "HumanAnnotation.h"
 
 @interface HumanPlaceRequestController : NSObject<NSURLConnectionDataDelegate>{
     NSMutableData *tempdata;
     NSMutableArray *adressdata;
 }
--(void)RequestStart;
+
+-(void)getHisPlace;
+-(void)sendMyPlace;
+
 @end

@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "RequestController.h"
 #import "TemporaryDataManager.h"
+#import "HumanAnnotation.h"
 
 @interface ViewController ()<MKMapViewDelegate, UITextFieldDelegate>
 
@@ -25,11 +26,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+
     RequestController *req = [RequestController new];
     [req RequestStart];
-
-    
     
     _mapView = [[MKMapView alloc]initWithFrame:self.view.frame];
     _mapView.showsUserLocation = YES;
@@ -37,26 +36,6 @@
     [_mapView.userLocation addObserver:self forKeyPath:@"Location" options:0 context:NULL];
     [TemporaryDataManager sharedManager].meLatitude = _mapView.userLocation.location.coordinate.latitude;
     [TemporaryDataManager sharedManager].meLongitude = _mapView.userLocation.location.coordinate.longitude;
-    /*
-    //渋谷
-    CLLocationCoordinate2D center = CLLocationCoordinate2DMake(35.658517, 139.701334);
-    MKCoordinateRegion shibuyaRegion = MKCoordinateRegionMakeWithDistance(center, 500.0, 500.0);
-    _mapView.region = shibuyaRegion;
-    
-    CustomAnnotation* tt = [[CustomAnnotation alloc] init];
-    tt.coordinate = CLLocationCoordinate2DMake(35.68167088485512, 139.7671939300537);
-    tt.title = @"どっか";
-    tt.subtitle = @"opening in Dec 1958";
-    tt.sample = @"35.655, 139.748";
-    
-    CustomAnnotation* st = [[CustomAnnotation alloc] init];
-    st.coordinate = CLLocationCoordinate2DMake(35.68187088485512, 139.7673939300537);
-    st.title = @"どっかpart2";
-    st.subtitle = @"opening in May 2012";
-    st.sample = @"35.710, 139.810";
-    
-    [_mapView addAnnotations:@[tt, st]];
-    */
     
     for (int i = 0; i < [TemporaryDataManager sharedManager].titleArray.count; i++) {
         [self PinOn:[TemporaryDataManager sharedManager].titleArray[i]
@@ -141,6 +120,19 @@
     tt.sample = sample;
     [_mapView addAnnotations:@[tt]];
 }
+
+
+//相手の位置を表示する
+
+- (void)showHisPlaceAnnotation
+{
+    HumanAnnotation* human = [[HumanAnnotation alloc]init];
+    human.coordinate = CLLocationCoordinate2DMake([TemporaryDataManager sharedManager].youLatitude, [TemporaryDataManager sharedManager].youLongitude);
+//    human.image = [UIImage imageNamed:@"human1.png"]; //人のアイコン画像どうやって設定しよう
+    [_mapView addAnnotation:human];
+}
+
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
