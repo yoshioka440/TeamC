@@ -7,6 +7,9 @@
 //  2014/5/9 海下直哉
 
 #import "ViewController.h"
+#import "RequestController.h"
+
+
 
 @interface ViewController ()
 
@@ -18,7 +21,11 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
+    RequestController *reqC = [RequestController new];
+    [reqC RequestStart];
 }
+
 
 - (void)didReceiveMemoryWarning
 {

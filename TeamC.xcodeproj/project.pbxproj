@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9F89A9D8191E180200404A21 /* TemporaryDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F89A9D7191E180200404A21 /* TemporaryDataManager.m */; };
+		9F89A9DB191E227600404A21 /* RequestController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F89A9DA191E227600404A21 /* RequestController.m */; };
 		B916DE04191B621200E62B23 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B916DE03191B621200E62B23 /* Foundation.framework */; };
 		B916DE06191B621200E62B23 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B916DE05191B621200E62B23 /* CoreGraphics.framework */; };
 		B916DE08191B621200E62B23 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B916DE07191B621200E62B23 /* UIKit.framework */; };
@@ -34,6 +36,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9F89A9D6191E180200404A21 /* TemporaryDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TemporaryDataManager.h; sourceTree = "<group>"; };
+		9F89A9D7191E180200404A21 /* TemporaryDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TemporaryDataManager.m; sourceTree = "<group>"; };
+		9F89A9D9191E227600404A21 /* RequestController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestController.h; sourceTree = "<group>"; };
+		9F89A9DA191E227600404A21 /* RequestController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequestController.m; sourceTree = "<group>"; };
 		B916DE00191B621200E62B23 /* TeamC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TeamC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B916DE03191B621200E62B23 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		B916DE05191B621200E62B23 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -119,6 +125,10 @@
 				B916DE19191B621300E62B23 /* ViewController.m */,
 				B916DE1B191B621300E62B23 /* Images.xcassets */,
 				B916DE0A191B621300E62B23 /* Supporting Files */,
+				9F89A9D6191E180200404A21 /* TemporaryDataManager.h */,
+				9F89A9D7191E180200404A21 /* TemporaryDataManager.m */,
+				9F89A9D9191E227600404A21 /* RequestController.h */,
+				9F89A9DA191E227600404A21 /* RequestController.m */,
 			);
 			path = TeamC;
 			sourceTree = "<group>";
@@ -250,6 +260,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				B916DE1A191B621300E62B23 /* ViewController.m in Sources */,
+				9F89A9D8191E180200404A21 /* TemporaryDataManager.m in Sources */,
+				9F89A9DB191E227600404A21 /* RequestController.m in Sources */,
 				B916DE14191B621300E62B23 /* AppDelegate.m in Sources */,
 				B916DE10191B621300E62B23 /* main.m in Sources */,
 			);
@@ -456,6 +468,7 @@
 				B916DE34191B621300E62B23 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B916DE35191B621300E62B23 /* Build configuration list for PBXNativeTarget "TeamCTests" */ = {
 			isa = XCConfigurationList;
@@ -464,6 +477,7 @@
 				B916DE37191B621300E62B23 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
