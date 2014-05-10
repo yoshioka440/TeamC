@@ -22,6 +22,7 @@
 {
     [super viewDidLoad];
     
+    
     _mapView = [[MKMapView alloc]initWithFrame:self.view.frame];
     _mapView.showsUserLocation = YES;
     [self.view addSubview:_mapView];
@@ -31,6 +32,8 @@
     CLLocationCoordinate2D center = CLLocationCoordinate2DMake(35.658517, 139.701334);
     MKCoordinateRegion shibuyaRegion = MKCoordinateRegionMakeWithDistance(center, 500.0, 500.0);
     _mapView.region = shibuyaRegion;
+    
+    
     
     CustomAnnotation* tt = [[CustomAnnotation alloc] init];
     tt.coordinate = CLLocationCoordinate2DMake(35.658627, 139.701444);
@@ -63,6 +66,7 @@
     [self.view addSubview:textField];
     textField.delegate = self;
     textField_ = textField;
+    
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
@@ -122,5 +126,27 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
+// マップデータをインスタンスに代入するメソッド
+
+- (void)putMapData:(float)lat myLog:(float)log title:(NSString*)title subtitle:(NSString*)subtitle
+{
+    CustomAnnotation* ca = [[CustomAnnotation alloc] init];
+    ca.coordinate   = (CLLocationCoordinate2DMake(lat, log));
+    ca.title        = title;
+    ca.subtitle     = subtitle;
+    //ca.sample       = sampleLog
+    
+    
+}
+
+/*    
+ CustomAnnotation* st = [[CustomAnnotation alloc] init];
+ st.coordinate = CLLocationCoordinate2DMake(35.658407, 139.701224);
+ st.title = @"どっかpart2";
+ st.subtitle = @"opening in May 2012";
+ st.sample = @"35.710, 139.810";
+ */
 
 @end
