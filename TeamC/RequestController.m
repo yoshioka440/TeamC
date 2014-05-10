@@ -14,8 +14,14 @@
 // リクエストする
 -(void)RequestStart{
     tempdata = [NSMutableData new];
+    NSString *urlString = [NSString stringWithFormat:@"http://oasis.mogya.com/api/v0/search?n=%fd&w=%fd&s=%fd&e=%fd",
+                           [TemporaryDataManager sharedManager].meLatitude+0.01f,
+                           [TemporaryDataManager sharedManager].meLongitude-0.01f,
+                           [TemporaryDataManager sharedManager].meLatitude-0.01f,
+                           [TemporaryDataManager sharedManager].meLongitude+0.01f];
+    NSLog(@"%@",urlString);
 
-    NSURL *url = [[NSURL alloc] initWithString:@"http://oasis.mogya.com/api/v0/search?n=34.70849&w=135.48775&s=34.69727&e=135.50951"];
+    NSURL *url = [[NSURL alloc] initWithString:urlString];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [NSURLConnection connectionWithRequest:request delegate:self];
 
@@ -47,8 +53,9 @@
     }
     
     // NSStringでないと、文字が正常に表示出来ない。(テストコード)
-    NSString *str = [TemporaryDataManager sharedManager].tagArray[0];
+    /*NSString *str = [TemporaryDataManager sharedManager].tagArray[0];
     NSLog(@"%@",str);
+    */
 }
 
 @end

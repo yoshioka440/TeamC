@@ -11,6 +11,6 @@
 #import <CoreLocation/CoreLocation.h>
 #import "CustomAnnotation.h"
 
-@interface ViewController : UIViewController<NSURLConnectionDataDelegate>
+@interface ViewController : UIViewController
 
 @end
