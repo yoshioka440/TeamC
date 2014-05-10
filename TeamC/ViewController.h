@@ -7,6 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
+#import <CoreLocation/CoreLocation.h>
+#import "CustomAnnotation.h"
 
 @interface ViewController : UIViewController
 
