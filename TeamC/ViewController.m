@@ -11,11 +11,15 @@
 
 
 
-@interface ViewController ()
+@interface ViewController ()<MKMapViewDelegate, UITextFieldDelegate>
+
 
 @end
 
-@implementation ViewController
+@implementation ViewController{
+    MKMapView* _mapView;
+    UITextField* textField_;
+}
 
 - (void)viewDidLoad
 {

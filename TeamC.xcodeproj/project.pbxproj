@@ -23,6 +23,8 @@
 		B916DE25191B621300E62B23 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B916DE07191B621200E62B23 /* UIKit.framework */; };
 		B916DE2D191B621300E62B23 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B916DE2B191B621300E62B23 /* InfoPlist.strings */; };
 		B916DE2F191B621300E62B23 /* TeamCTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B916DE2E191B621300E62B23 /* TeamCTests.m */; };
+		F4B13C6B191E0D0D003311A1 /* CustomAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B13C6A191E0D0D003311A1 /* CustomAnnotation.m */; };
+		F4B13C6E191E211B003311A1 /* HumanAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B13C6D191E211B003311A1 /* HumanAnnotation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +61,10 @@
 		B916DE2A191B621300E62B23 /* TeamCTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TeamCTests-Info.plist"; sourceTree = "<group>"; };
 		B916DE2C191B621300E62B23 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B916DE2E191B621300E62B23 /* TeamCTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TeamCTests.m; sourceTree = "<group>"; };
+		F4B13C69191E0D0D003311A1 /* CustomAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomAnnotation.h; sourceTree = "<group>"; };
+		F4B13C6A191E0D0D003311A1 /* CustomAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomAnnotation.m; sourceTree = "<group>"; };
+		F4B13C6C191E211B003311A1 /* HumanAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HumanAnnotation.h; sourceTree = "<group>"; };
+		F4B13C6D191E211B003311A1 /* HumanAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HumanAnnotation.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +129,10 @@
 				B916DE15191B621300E62B23 /* Main.storyboard */,
 				B916DE18191B621300E62B23 /* ViewController.h */,
 				B916DE19191B621300E62B23 /* ViewController.m */,
+				F4B13C69191E0D0D003311A1 /* CustomAnnotation.h */,
+				F4B13C6A191E0D0D003311A1 /* CustomAnnotation.m */,
+				F4B13C6C191E211B003311A1 /* HumanAnnotation.h */,
+				F4B13C6D191E211B003311A1 /* HumanAnnotation.m */,
 				B916DE1B191B621300E62B23 /* Images.xcassets */,
 				B916DE0A191B621300E62B23 /* Supporting Files */,
 				9F89A9D6191E180200404A21 /* TemporaryDataManager.h */,
@@ -263,7 +273,9 @@
 				9F89A9D8191E180200404A21 /* TemporaryDataManager.m in Sources */,
 				9F89A9DB191E227600404A21 /* RequestController.m in Sources */,
 				B916DE14191B621300E62B23 /* AppDelegate.m in Sources */,
+				F4B13C6E191E211B003311A1 /* HumanAnnotation.m in Sources */,
 				B916DE10191B621300E62B23 /* main.m in Sources */,
+				F4B13C6B191E0D0D003311A1 /* CustomAnnotation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
