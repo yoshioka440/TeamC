@@ -25,40 +25,9 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    _mapView = [[MKMapView alloc]initWithFrame:self.view.frame];
-    _mapView.showsUserLocation = YES;
-    // 表示倍率の設定
-    MKCoordinateSpan span = MKCoordinateSpanMake(0.01, 0.01);
-    MKCoordinateRegion region = MKCoordinateRegionMake(_mapView.userLocation.coordinate, span);
-    [_mapView setRegion:region animated:YES];
-    [_mapView.userLocation addObserver:self forKeyPath:@"Location" options:0 context:NULL];
-    [self.view addSubview:_mapView];
-    
     RequestController *req = [RequestController new];
     [req RequestStart];
-    
-    for (int i = 0; i < [TemporaryDataManager sharedManager].titleArray.count; i++) {
-        //CLLocationDegrees latitude = [[TemporaryDataManager sharedManager].latitudeArray[i] floatValue];
-        //CLLocationDegrees longitude = [[TemporaryDataManager sharedManager].longitudeArray[i] floatValue];
-        [self PinOn:@"a"//[TemporaryDataManager sharedManager].titleArray[i]
-        LatitudeSet:[[TemporaryDataManager sharedManager].latitudeArray[i] floatValue]
-        LongitudeSet:[[TemporaryDataManager sharedManager].longitudeArray[i] floatValue]
-        SubTitleSet:nil//[TemporaryDataManager sharedManager].adressArray[i]
-        SampleSet:nil//[TemporaryDataManager sharedManager].tagArray[i]
-         ];
-        NSLog(@"%f",[[TemporaryDataManager sharedManager].latitudeArray[i] floatValue]);
-        NSLog(@"%f",[[TemporaryDataManager sharedManager].longitudeArray[i] floatValue]);
-    }
-    
-    [_mapView addAnnotations:annotationArray];
-    /*CustomAnnotation* tt = [[CustomAnnotation alloc] init];
-    tt.coordinate = CLLocationCoordinate2DMake(35.710139,139.810833);
-    tt.title = @"Tokyo Tower";
-    tt.subtitle = @"opening in Dec 1958";
-    tt.sample = @"35.655, 139.748";
-    [_mapView addAnnotations:@[tt]];*/
-    
-    
+    NSLog(@"%d", [TemporaryDataManager sharedManager].latitudeArray.count);
     self.view.backgroundColor = [UIColor clearColor];
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -77,6 +46,27 @@
     textField.delegate = self;
     textField_ = textField;
     
+    _mapView = [[MKMapView alloc]initWithFrame:self.view.frame];
+    _mapView.showsUserLocation = YES;
+    // 表示倍率の設定
+    MKCoordinateSpan span = MKCoordinateSpanMake(0.01, 0.01);
+    MKCoordinateRegion region = MKCoordinateRegionMake(_mapView.userLocation.coordinate, span);
+    [_mapView setRegion:region animated:YES];
+    [_mapView.userLocation addObserver:self forKeyPath:@"Location" options:0 context:NULL];
+    [self.view addSubview:_mapView];
+    
+    for (int i = 0; i < [TemporaryDataManager sharedManager].titleArray.count; i++) {
+        [self PinOn:[TemporaryDataManager sharedManager].titleArray[i]
+        LatitudeSet:[[TemporaryDataManager sharedManager].latitudeArray[i] floatValue]
+       LongitudeSet:[[TemporaryDataManager sharedManager].longitudeArray[i] floatValue]
+        SubTitleSet:[TemporaryDataManager sharedManager].adressArray[i]
+          SampleSet:[TemporaryDataManager sharedManager].tagArray[i]];
+        NSLog(@"%f",[[TemporaryDataManager sharedManager].latitudeArray[i] floatValue]);
+        NSLog(@"%f",[[TemporaryDataManager sharedManager].longitudeArray[i] floatValue]);
+    }
+
+    
+    //[_mapView addAnnotations:annotationArray];
     
 }
 
@@ -87,13 +77,11 @@
     
     // 地図の中心座標に現在地を設定
     _mapView.centerCoordinate = _mapView.userLocation.location.coordinate;
-    
+    [_mapView.userLocation removeObserver:self forKeyPath:@"Location"];
 
 }
 
-
 ////LINEで送る機能
-
 - (void)sendToLineButtonWasTapped:(id)sender {
     NSString *plainString = textField_.text;
     
@@ -130,7 +118,7 @@
     tt.title = title;
     tt.subtitle = subTitle;
     tt.sample = sample;
-    [annotationArray addObject:tt];
+    [_mapView addAnnotation:tt];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField

@@ -29,8 +29,8 @@
 }
 
 -(void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation{
-    [[TemporaryDataManager sharedManager] LatitudeandLongitude:newLocation.coordinate.latitude
-                                                     Longitude:newLocation.coordinate.longitude];
+    [TemporaryDataManager sharedManager].meLatitude = newLocation.coordinate.latitude;
+    [TemporaryDataManager sharedManager].meLongitude = newLocation.coordinate.longitude;
     //NSLog(@"%f",[TemporaryDataManager sharedManager].meLongitude);
     
     //[TemporaryDataManager sharedManager].meLatitude = newLocation.coordinate.latitude;

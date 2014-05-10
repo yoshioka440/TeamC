@@ -10,7 +10,6 @@
 
 @interface RequestController : NSObject<NSURLConnectionDataDelegate>{
     NSMutableData *tempdata;
-    NSMutableArray *adressdata;
 }
 -(void)RequestStart;
 @end

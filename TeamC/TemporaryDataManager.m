@@ -38,10 +38,4 @@ static TemporaryDataManager *temporaryDataManager_ = nil;
     return self;
 }
 
-
-
--(void)LatitudeandLongitude:(float)latitude Longitude:(float)longitude{
-    _meLatitude = latitude;
-    _meLongitude = longitude;
-}
 @end
