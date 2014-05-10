@@ -25,6 +25,8 @@ static TemporaryDataManager *temporaryDataManager_ = nil;
     self = [super init];
     if (self) {
         // 初期化
+        //_meLatitude = 0;
+        //_meLongitude = 0;
         _adressArray = [NSMutableArray new];
         _latitudeArray = [NSMutableArray new];
         _longitudeArray = [NSMutableArray new];
@@ -34,5 +36,12 @@ static TemporaryDataManager *temporaryDataManager_ = nil;
     }
     
     return self;
+}
+
+
+
+-(void)LatitudeandLongitude:(float)latitude Longitude:(float)longitude{
+    _meLatitude = latitude;
+    _meLongitude = longitude;
 }
 @end

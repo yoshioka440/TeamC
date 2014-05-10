@@ -10,7 +10,7 @@
 #import "RequestController.h"
 #import "TemporaryDataManager.h"
 
-@interface ViewController ()<MKMapViewDelegate, UITextFieldDelegate>
+@interface ViewController ()<MKMapViewDelegate, UITextFieldDelegate, CLLocationManagerDelegate>
 
 
 @end
@@ -18,53 +18,46 @@
 @implementation ViewController{
     MKMapView* _mapView;
     UITextField* textField_;
-    
-    CLLocationManager *cl;
+    NSMutableArray *annotationArray;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    RequestController *req = [RequestController new];
-    [req RequestStart];
-
-    
-    
     _mapView = [[MKMapView alloc]initWithFrame:self.view.frame];
     _mapView.showsUserLocation = YES;
-    [self.view addSubview:_mapView];
+    // 表示倍率の設定
+    MKCoordinateSpan span = MKCoordinateSpanMake(0.01, 0.01);
+    MKCoordinateRegion region = MKCoordinateRegionMake(_mapView.userLocation.coordinate, span);
+    [_mapView setRegion:region animated:YES];
     [_mapView.userLocation addObserver:self forKeyPath:@"Location" options:0 context:NULL];
-    [TemporaryDataManager sharedManager].meLatitude = _mapView.userLocation.location.coordinate.latitude;
-    [TemporaryDataManager sharedManager].meLongitude = _mapView.userLocation.location.coordinate.longitude;
-    /*
-    //渋谷
-    CLLocationCoordinate2D center = CLLocationCoordinate2DMake(35.658517, 139.701334);
-    MKCoordinateRegion shibuyaRegion = MKCoordinateRegionMakeWithDistance(center, 500.0, 500.0);
-    _mapView.region = shibuyaRegion;
+    [self.view addSubview:_mapView];
     
-    CustomAnnotation* tt = [[CustomAnnotation alloc] init];
-    tt.coordinate = CLLocationCoordinate2DMake(35.68167088485512, 139.7671939300537);
-    tt.title = @"どっか";
-    tt.subtitle = @"opening in Dec 1958";
-    tt.sample = @"35.655, 139.748";
-    
-    CustomAnnotation* st = [[CustomAnnotation alloc] init];
-    st.coordinate = CLLocationCoordinate2DMake(35.68187088485512, 139.7673939300537);
-    st.title = @"どっかpart2";
-    st.subtitle = @"opening in May 2012";
-    st.sample = @"35.710, 139.810";
-    
-    [_mapView addAnnotations:@[tt, st]];
-    */
+    RequestController *req = [RequestController new];
+    [req RequestStart];
     
     for (int i = 0; i < [TemporaryDataManager sharedManager].titleArray.count; i++) {
-        [self PinOn:[TemporaryDataManager sharedManager].titleArray[i]
-         LatitudeSet:[[TemporaryDataManager sharedManager].latitudeArray[i] floatValue]
+        //CLLocationDegrees latitude = [[TemporaryDataManager sharedManager].latitudeArray[i] floatValue];
+        //CLLocationDegrees longitude = [[TemporaryDataManager sharedManager].longitudeArray[i] floatValue];
+        [self PinOn:@"a"//[TemporaryDataManager sharedManager].titleArray[i]
+        LatitudeSet:[[TemporaryDataManager sharedManager].latitudeArray[i] floatValue]
         LongitudeSet:[[TemporaryDataManager sharedManager].longitudeArray[i] floatValue]
-        SubTitleSet:[TemporaryDataManager sharedManager].adressArray[i]
-          SampleSet:[TemporaryDataManager sharedManager].tagArray[i]];
+        SubTitleSet:nil//[TemporaryDataManager sharedManager].adressArray[i]
+        SampleSet:nil//[TemporaryDataManager sharedManager].tagArray[i]
+         ];
+        NSLog(@"%f",[[TemporaryDataManager sharedManager].latitudeArray[i] floatValue]);
+        NSLog(@"%f",[[TemporaryDataManager sharedManager].longitudeArray[i] floatValue]);
     }
+    
+    [_mapView addAnnotations:annotationArray];
+    /*CustomAnnotation* tt = [[CustomAnnotation alloc] init];
+    tt.coordinate = CLLocationCoordinate2DMake(35.710139,139.810833);
+    tt.title = @"Tokyo Tower";
+    tt.subtitle = @"opening in Dec 1958";
+    tt.sample = @"35.655, 139.748";
+    [_mapView addAnnotations:@[tt]];*/
+    
     
     self.view.backgroundColor = [UIColor clearColor];
     
@@ -95,10 +88,7 @@
     // 地図の中心座標に現在地を設定
     _mapView.centerCoordinate = _mapView.userLocation.location.coordinate;
     
-    // 表示倍率の設定
-    MKCoordinateSpan span = MKCoordinateSpanMake(0.01, 0.01);
-    MKCoordinateRegion region = MKCoordinateRegionMake(_mapView.userLocation.coordinate, span);
-    [_mapView setRegion:region animated:YES];
+
 }
 
 
@@ -133,14 +123,16 @@
     [[UIApplication sharedApplication] openURL:url];
 }
 
+
 -(void)PinOn:(NSString *)title LatitudeSet:(float)latitude LongitudeSet:(float)longitude SubTitleSet:(NSString *)subTitle SampleSet:(NSString *)sample{
     CustomAnnotation* tt = [[CustomAnnotation alloc] init];
     tt.coordinate = CLLocationCoordinate2DMake(latitude, longitude);
     tt.title = title;
     tt.subtitle = subTitle;
     tt.sample = sample;
-    [_mapView addAnnotations:@[tt]];
+    [annotationArray addObject:tt];
 }
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];

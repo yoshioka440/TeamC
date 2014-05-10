@@ -14,13 +14,12 @@
 // リクエストする
 -(void)RequestStart{
     tempdata = [NSMutableData new];
-    NSString *urlString = [NSString stringWithFormat:@"http://oasis.mogya.com/api/v0/search?n=%fd&w=%fd&s=%fd&e=%fd",
-                           [TemporaryDataManager sharedManager].meLatitude+0.01f,
-                           [TemporaryDataManager sharedManager].meLongitude-0.01f,
-                           [TemporaryDataManager sharedManager].meLatitude-0.01f,
-                           [TemporaryDataManager sharedManager].meLongitude+0.01f];
+    NSString *urlString = [NSString stringWithFormat:@"http://oasis.mogya.com/api/v0/search?n=%f&w=%f&s=%f&e=%f",
+                           [TemporaryDataManager sharedManager].meLatitude+0.005f,
+                           [TemporaryDataManager sharedManager].meLongitude-0.005f,
+                           [TemporaryDataManager sharedManager].meLatitude-0.005f,
+                           [TemporaryDataManager sharedManager].meLongitude+0.005f];
     NSLog(@"%@",urlString);
-
     NSURL *url = [[NSURL alloc] initWithString:urlString];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [NSURLConnection connectionWithRequest:request delegate:self];
@@ -53,9 +52,9 @@
     }
     
     // NSStringでないと、文字が正常に表示出来ない。(テストコード)
-    /*NSString *str = [TemporaryDataManager sharedManager].tagArray[0];
-    NSLog(@"%@",str);
-    */
+    //NSString *str = [TemporaryDataManager sharedManager].titleArray[0];
+    //float lat = [[TemporaryDataManager sharedManager].latitudeArray[0] floatValue];
+    //NSLog(@"%f",lat);
 }
 
 @end
