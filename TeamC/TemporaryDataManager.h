@@ -24,7 +24,7 @@
 @property (nonatomic) NSMutableArray *url_pc_Array;
 @property (nonatomic) NSMutableArray *tagArray;
 
-@property (nonatomic) NSMutableArray *annotationArray;
+
 // 待ち合わせ相手の情報を格納
 @property (nonatomic) NSString *mailAdress;
 @property (nonatomic) float youLatitude,youLongitude;

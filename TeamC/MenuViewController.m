@@ -32,9 +32,6 @@
     [TemporaryDataManager sharedManager].meLatitude = newLocation.coordinate.latitude;
     [TemporaryDataManager sharedManager].meLongitude = newLocation.coordinate.longitude;
     //NSLog(@"%f",[TemporaryDataManager sharedManager].meLongitude);
-    
-    //[TemporaryDataManager sharedManager].meLatitude = newLocation.coordinate.latitude;
-    //[TemporaryDataManager sharedManager].meLongitude = newLocation.coordinate.longitude;
 }
 
 -(void)NowPlaceButton{

@@ -18,16 +18,16 @@
 @implementation ViewController{
     MKMapView* _mapView;
     UITextField* textField_;
-    NSMutableArray *annotationArray;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
     RequestController *req = [RequestController new];
     [req RequestStart];
-    NSLog(@"%d", [TemporaryDataManager sharedManager].latitudeArray.count);
+    NSLog(@"%lu", (unsigned long)[TemporaryDataManager sharedManager].latitudeArray.count);
     self.view.backgroundColor = [UIColor clearColor];
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -61,8 +61,8 @@
        LongitudeSet:[[TemporaryDataManager sharedManager].longitudeArray[i] floatValue]
         SubTitleSet:[TemporaryDataManager sharedManager].adressArray[i]
           SampleSet:[TemporaryDataManager sharedManager].tagArray[i]];
-        NSLog(@"%f",[[TemporaryDataManager sharedManager].latitudeArray[i] floatValue]);
-        NSLog(@"%f",[[TemporaryDataManager sharedManager].longitudeArray[i] floatValue]);
+        //NSLog(@"%f",[[TemporaryDataManager sharedManager].latitudeArray[i] floatValue]);
+        //NSLog(@"%f",[[TemporaryDataManager sharedManager].longitudeArray[i] floatValue]);
     }
 
     
@@ -109,6 +109,12 @@
      */
     
     [[UIApplication sharedApplication] openURL:url];
+}
+
+-(void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation{
+    [TemporaryDataManager sharedManager].meLatitude = newLocation.coordinate.latitude;
+    [TemporaryDataManager sharedManager].meLongitude = newLocation.coordinate.longitude;
+    //NSLog(@"%f",[TemporaryDataManager sharedManager].meLongitude);
 }
 
 
