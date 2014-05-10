@@ -17,7 +17,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    //Hello World!
+    //Teruya Kusumoto
 }
 
 - (void)didReceiveMemoryWarning
