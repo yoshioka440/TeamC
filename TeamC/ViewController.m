@@ -99,7 +99,25 @@
     // 地図の中心座標に現在地を設定
     _mapView.centerCoordinate = _mapView.userLocation.location.coordinate;
     [_mapView.userLocation removeObserver:self forKeyPath:@"Location"];
+}
 
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
+{
+    if (![annotation isKindOfClass:[HumanAnnotation class]]) {
+        return nil;
+    }
+    static NSString* reuseId = @"ann";
+    MKAnnotationView* av = (MKAnnotationView *)[_mapView dequeueReusableAnnotationViewWithIdentifier:reuseId];
+    if (av == nil) {
+        av = [[MKAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:reuseId];
+        av.canShowCallout = YES;
+        av.image = [UIImage imageNamed:@"human.png"];
+    } else {
+        av.annotation = annotation;
+    }
+    UIButton* detailButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+    av.rightCalloutAccessoryView = detailButton;
+    return av;
 }
 
 ////LINEで送る機能
