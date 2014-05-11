@@ -10,10 +10,8 @@
 #import "RequestController.h"
 #import "TemporaryDataManager.h"
 #import "HumanAnnotation.h"
-#import "FlatUIKit.h"
 
 @interface ViewController ()<MKMapViewDelegate, UITextFieldDelegate, CLLocationManagerDelegate>
-
 
 @end
 
@@ -25,7 +23,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
     RequestController *req = [RequestController new];
     [req RequestStart];
     NSLog(@"%lu", (unsigned long)[TemporaryDataManager sharedManager].latitudeArray.count);
@@ -58,7 +56,7 @@
         //NSLog(@"%f",[[TemporaryDataManager sharedManager].latitudeArray[i] floatValue]);
         //NSLog(@"%f",[[TemporaryDataManager sharedManager].longitudeArray[i] floatValue]);
     }
-
+    
     //[_mapView addAnnotations:annotationArray];
     
     CGFloat buttonY;
@@ -74,14 +72,18 @@
     [[button1 layer] setBorderWidth:0.5];
     [button1 setImage:[UIImage imageNamed:@"gpsIcon.png"] forState:UIControlStateNormal];
     button1.imageEdgeInsets = UIEdgeInsetsMake(3, 30, 3, 30);
+    [button1 addTarget:self action:@selector(setGPS) forControlEvents:UIControlEventTouchDown];
     [self.view addSubview:button1];
+    
     FUIButton* button2 = [[FUIButton alloc]initWithFrame:CGRectMake(107, buttonY, 107, 50)];
     button2.backgroundColor = [UIColor whiteColor];
     [[button2 layer] setBorderColor:[[UIColor asbestosColor] CGColor]];
     [[button2 layer] setBorderWidth:0.5];
     [button2 setImage:[UIImage imageNamed:@"heart.png"] forState:UIControlStateNormal];
     button2.imageEdgeInsets = UIEdgeInsetsMake(3, 30, 3, 30);
+    [button2 addTarget:self action:@selector(getHisPlace) forControlEvents:UIControlEventTouchDown];
     [self.view addSubview:button2];
+    
     FUIButton* button3 = [[FUIButton alloc]initWithFrame:CGRectMake(214, buttonY, 107, 50)];
     button3.backgroundColor = [UIColor whiteColor];
     [[button3 layer] setBorderColor:[[UIColor asbestosColor] CGColor]];
@@ -89,6 +91,13 @@
     [button3 setImage:[UIImage imageNamed:@"refresh.png"] forState:UIControlStateNormal];
     button3.imageEdgeInsets = UIEdgeInsetsMake(3, 30, 3, 30);
     [self.view addSubview:button3];
+}
+
+//現在地ボタン
+- (void)setGPS
+{
+    _mapView.centerCoordinate = _mapView.userLocation.location.coordinate;
+    //アニメーションほしい
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
@@ -200,6 +209,19 @@
     [_mapView addAnnotation:human];
 }
 
+// 自分の現在地を送る(テスト段階では使わない？)
+-(void)sendMyPlace{
+    tempdata = [NSMutableData new];
+    NSString *urlString = [NSString stringWithFormat:@"http://10.13.37.248:8888/insert.php?mail=%@&latitude=%f&longitude=%f",
+                           @"teruyakusumoto@gmail.com",
+                           [TemporaryDataManager sharedManager].meLatitude,
+                           [TemporaryDataManager sharedManager].meLongitude];
+    NSLog(@"%@",urlString);
+    
+    NSURL *url = [[NSURL alloc] initWithString:urlString];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    [NSURLConnection connectionWithRequest:request delegate:self];
+}
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {

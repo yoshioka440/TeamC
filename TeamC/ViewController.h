@@ -10,7 +10,16 @@
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
 #import "CustomAnnotation.h"
+#import "FlatUIKit.h"
 
-@interface ViewController : UIViewController
+@protocol ViewControllerDelegate
+- (void)getHisPlace;
+@end
+
+@interface ViewController : UIViewController<NSURLConnectionDataDelegate>{
+    NSMutableData *tempdata;
+    NSMutableArray *adressdata;
+}
+
 
 @end

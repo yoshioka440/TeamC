@@ -24,7 +24,6 @@
 		B916DE25191B621300E62B23 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B916DE07191B621200E62B23 /* UIKit.framework */; };
 		B916DE2D191B621300E62B23 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B916DE2B191B621300E62B23 /* InfoPlist.strings */; };
 		B916DE2F191B621300E62B23 /* TeamCTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B916DE2E191B621300E62B23 /* TeamCTests.m */; };
-		F431F2A4191E65C2006B71E0 /* HumanPlaceRequestController.m in Sources */ = {isa = PBXBuildFile; fileRef = F431F2A3191E65C2006B71E0 /* HumanPlaceRequestController.m */; };
 		F4AA76AB191F2A4600DFE1C0 /* gpsIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = F4AA76A7191F2A4600DFE1C0 /* gpsIcon.png */; };
 		F4AA76AC191F2A4600DFE1C0 /* heart.png in Resources */ = {isa = PBXBuildFile; fileRef = F4AA76A8191F2A4600DFE1C0 /* heart.png */; };
 		F4AA76AD191F2A4600DFE1C0 /* human.png in Resources */ = {isa = PBXBuildFile; fileRef = F4AA76A9191F2A4600DFE1C0 /* human.png */; };
@@ -88,8 +87,6 @@
 		B916DE2A191B621300E62B23 /* TeamCTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TeamCTests-Info.plist"; sourceTree = "<group>"; };
 		B916DE2C191B621300E62B23 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B916DE2E191B621300E62B23 /* TeamCTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TeamCTests.m; sourceTree = "<group>"; };
-		F431F2A2191E65C2006B71E0 /* HumanPlaceRequestController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HumanPlaceRequestController.h; sourceTree = "<group>"; };
-		F431F2A3191E65C2006B71E0 /* HumanPlaceRequestController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HumanPlaceRequestController.m; sourceTree = "<group>"; };
 		F4AA76A7191F2A4600DFE1C0 /* gpsIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gpsIcon.png; sourceTree = "<group>"; };
 		F4AA76A8191F2A4600DFE1C0 /* heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = heart.png; sourceTree = "<group>"; };
 		F4AA76A9191F2A4600DFE1C0 /* human.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = human.png; sourceTree = "<group>"; };
@@ -216,8 +213,6 @@
 				9F89A9D7191E180200404A21 /* TemporaryDataManager.m */,
 				9F89A9D9191E227600404A21 /* RequestController.h */,
 				9F89A9DA191E227600404A21 /* RequestController.m */,
-				F431F2A2191E65C2006B71E0 /* HumanPlaceRequestController.h */,
-				F431F2A3191E65C2006B71E0 /* HumanPlaceRequestController.m */,
 				9F48B0DD191E7E8900AE38FA /* MenuViewController.h */,
 				9F48B0DE191E7E8900AE38FA /* MenuViewController.m */,
 			);
@@ -408,7 +403,6 @@
 				9F89A9DB191E227600404A21 /* RequestController.m in Sources */,
 				F4AA76DC191F2A5B00DFE1C0 /* FUISwitch.m in Sources */,
 				F4AA76DD191F2A5B00DFE1C0 /* FUITextField.m in Sources */,
-				F431F2A4191E65C2006B71E0 /* HumanPlaceRequestController.m in Sources */,
 				F4AA76DA191F2A5B00DFE1C0 /* FUIPopoverBackgroundView.m in Sources */,
 				F4AA76E4191F2A5B00DFE1C0 /* UIProgressView+FlatUI.m in Sources */,
 				9F48B0DF191E7E8900AE38FA /* MenuViewController.m in Sources */,
