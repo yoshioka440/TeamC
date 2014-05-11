@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		9F48B0DF191E7E8900AE38FA /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F48B0DE191E7E8900AE38FA /* MenuViewController.m */; };
+		9F48B0E4191F478400AE38FA /* delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F48B0E3191F478400AE38FA /* delete.png */; };
+		9F48B0E6191F478900AE38FA /* line.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F48B0E5191F478900AE38FA /* line.png */; };
 		9F89A9D8191E180200404A21 /* TemporaryDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F89A9D7191E180200404A21 /* TemporaryDataManager.m */; };
 		9F89A9DB191E227600404A21 /* RequestController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F89A9DA191E227600404A21 /* RequestController.m */; };
 		B916DE04191B621200E62B23 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B916DE03191B621200E62B23 /* Foundation.framework */; };
@@ -65,6 +67,8 @@
 /* Begin PBXFileReference section */
 		9F48B0DD191E7E8900AE38FA /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
 		9F48B0DE191E7E8900AE38FA /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
+		9F48B0E3191F478400AE38FA /* delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delete.png; sourceTree = "<group>"; };
+		9F48B0E5191F478900AE38FA /* line.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = line.png; sourceTree = "<group>"; };
 		9F89A9D6191E180200404A21 /* TemporaryDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TemporaryDataManager.h; sourceTree = "<group>"; };
 		9F89A9D7191E180200404A21 /* TemporaryDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TemporaryDataManager.m; sourceTree = "<group>"; };
 		9F89A9D9191E227600404A21 /* RequestController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestController.h; sourceTree = "<group>"; };
@@ -373,6 +377,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9F48B0E4191F478400AE38FA /* delete.png in Resources */,
 				B916DE1C191B621300E62B23 /* Images.xcassets in Resources */,
 				F4AA76FF191F513500DFE1C0 /* 40.jpg in Resources */,
 				F4AA76AD191F2A4600DFE1C0 /* human.png in Resources */,

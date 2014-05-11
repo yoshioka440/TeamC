@@ -4,7 +4,7 @@
 //
 //  Created by yoshioka440 on 2014/05/08.
 //  Copyright (c) 2014年 Unko. All rights reserved.
-//  2014/5/9 海下直哉
+//  2014/5/9 海下直哉 a
 
 #import "ViewController.h"
 #import "RequestController.h"
@@ -18,6 +18,10 @@
 @implementation ViewController{
     MKMapView* _mapView;
     UITextField* textField_;
+    UIView *detailView;
+    UILabel *title,*subtitle;
+    UIButton *line,*del;
+    
 }
 
 - (void)viewDidLoad
@@ -52,7 +56,7 @@
         LatitudeSet:[[TemporaryDataManager sharedManager].latitudeArray[i] floatValue]
        LongitudeSet:[[TemporaryDataManager sharedManager].longitudeArray[i] floatValue]
         SubTitleSet:[TemporaryDataManager sharedManager].adressArray[i]
-          SampleSet:[TemporaryDataManager sharedManager].tagArray[i]];
+          SampleSet:[TemporaryDataManager sharedManager].url_pc_Array[i]];
         //NSLog(@"%f",[[TemporaryDataManager sharedManager].latitudeArray[i] floatValue]);
         //NSLog(@"%f",[[TemporaryDataManager sharedManager].longitudeArray[i] floatValue]);
     }
@@ -110,28 +114,86 @@
     [_mapView.userLocation removeObserver:self forKeyPath:@"Location"];
 }
 
-- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
-{
+-(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation{
     if (![annotation isKindOfClass:[HumanAnnotation class]]) {
         return nil;
     }
-    static NSString* reuseId = @"ann";
-    MKAnnotationView* av = (MKAnnotationView *)[_mapView dequeueReusableAnnotationViewWithIdentifier:reuseId];
-    if (av == nil) {
-        av = [[MKAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:reuseId];
-        av.canShowCallout = YES;
-        av.image = [UIImage imageNamed:@"human.png"];
-    } else {
-        av.annotation = annotation;
+    
+    MKAnnotationView *annotationView;
+    NSString *identifier = @"Pin";
+    annotationView = (MKAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
+    
+    if (annotationView == nil) {
+        annotationView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier];
     }
-    UIButton* detailButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-    av.rightCalloutAccessoryView = detailButton;
-    return av;
+    
+    annotationView.image = [UIImage imageNamed:@"human.png"];
+    annotationView.annotation = annotation;
+    return annotationView;
+}
+
+- (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views {
+    // add detail disclosure button to callout
+    [views enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL* stop) {
+        ((MKAnnotationView*)obj).rightCalloutAccessoryView
+        = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+    }];
+}
+
+-(void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
+    
+    // 詳細画面
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    detailView = [UIView new];
+    detailView.frame = CGRectMake(0, screenRect.size.height-100, screenRect.size.width, 100);
+    detailView.backgroundColor = [UIColor blackColor];
+    [self.view addSubview:detailView];
+    
+    // 店名
+    title = [UILabel new];
+    title.frame = CGRectMake(detailView.frame.origin.x, detailView.frame.origin.y, detailView.frame.size.width, 50);
+    title.text = view.annotation.title;
+    title.textColor = [UIColor whiteColor];
+    title.font = [UIFont systemFontOfSize:15];
+    [self.view addSubview:title];
+    
+    // 住所
+    subtitle = [UILabel new];
+    subtitle.frame = CGRectMake(detailView.frame.origin.x, detailView.frame.origin.y+20, detailView.frame.size.width, 50);
+    subtitle.text = view.annotation.subtitle;
+    subtitle.textColor = [UIColor whiteColor];
+    subtitle.font = [UIFont systemFontOfSize:10];
+    [self.view addSubview:subtitle];
+    
+    // line投稿
+    line = [UIButton new];
+    line.frame = CGRectMake(screenRect.size.width-100, screenRect.size.height-50, 50, 50);
+    CustomAnnotation *cu =(CustomAnnotation *)view.annotation;
+    NSString *url = cu.link;
+    _linetext = url;
+    NSLog(@"%@",_linetext);
+    [line addTarget:self action:@selector(sendToLineButtonWasTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [line setBackgroundImage:[UIImage imageNamed:@"line.png"] forState:UIControlStateNormal];
+    [self.view addSubview:line];
+    
+    del = [UIButton new];
+    del.frame = CGRectMake(screenRect.size.width-50, screenRect.size.height-50, 50, 50);
+    [del addTarget:self action:@selector(deleteView:) forControlEvents:UIControlEventTouchUpInside];
+    [del setBackgroundImage:[UIImage imageNamed:@"delete.png"] forState:UIControlStateNormal];
+    [self.view addSubview:del];
+}
+
+-(void)deleteView:(id)sender{
+    [detailView removeFromSuperview];
+    [title removeFromSuperview];
+    [subtitle removeFromSuperview];
+    [line removeFromSuperview];
+    [del removeFromSuperview];
 }
 
 ////LINEで送る機能
-- (void)sendToLineButtonWasTapped:(id)sender {
-    NSString *plainString = textField_.text;
+- (void)sendToLineButtonWasTapped:(id)sender{
+    NSString *plainString = _linetext;
     
     // escape
     NSString *contentKey = (__bridge NSString *)CFURLCreateStringByAddingPercentEscapes(
@@ -159,19 +221,13 @@
     [[UIApplication sharedApplication] openURL:url];
 }
 
--(void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation{
-    [TemporaryDataManager sharedManager].meLatitude = newLocation.coordinate.latitude;
-    [TemporaryDataManager sharedManager].meLongitude = newLocation.coordinate.longitude;
-    //NSLog(@"%f",[TemporaryDataManager sharedManager].meLongitude);
-}
-
-//ピンを立てる
+// カフェのピンを立てる
 -(void)PinOn:(NSString *)title LatitudeSet:(float)latitude LongitudeSet:(float)longitude SubTitleSet:(NSString *)subTitle SampleSet:(NSString *)sample{
     CustomAnnotation* tt = [[CustomAnnotation alloc] init];
     tt.coordinate = CLLocationCoordinate2DMake(latitude, longitude);
     tt.title = title;
     tt.subtitle = subTitle;
-    tt.sample = sample;
+    tt.link = sample;
     [_mapView addAnnotation:tt];
 }
 

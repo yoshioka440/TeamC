@@ -21,5 +21,5 @@
     NSMutableArray *adressdata;
 }
 
-
+@property (nonatomic) NSString *linetext;
 @end
