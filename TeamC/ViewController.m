@@ -71,7 +71,7 @@
     [[button1 layer] setBorderColor:[[UIColor asbestosColor] CGColor]];
     [[button1 layer] setBorderWidth:0.5];
     [button1 setImage:[UIImage imageNamed:@"gpsIcon.png"] forState:UIControlStateNormal];
-    button1.imageEdgeInsets = UIEdgeInsetsMake(3, 30, 3, 30);
+    button1.imageEdgeInsets = UIEdgeInsetsMake(3, 35, 3, 35);
     [button1 addTarget:self action:@selector(setGPS) forControlEvents:UIControlEventTouchDown];
     [self.view addSubview:button1];
     
@@ -80,7 +80,7 @@
     [[button2 layer] setBorderColor:[[UIColor asbestosColor] CGColor]];
     [[button2 layer] setBorderWidth:0.5];
     [button2 setImage:[UIImage imageNamed:@"heart.png"] forState:UIControlStateNormal];
-    button2.imageEdgeInsets = UIEdgeInsetsMake(3, 30, 3, 30);
+    button2.imageEdgeInsets = UIEdgeInsetsMake(3, 35, 3, 35);
     [button2 addTarget:self action:@selector(getHisPlace) forControlEvents:UIControlEventTouchDown];
     [self.view addSubview:button2];
     
@@ -89,7 +89,7 @@
     [[button3 layer] setBorderColor:[[UIColor asbestosColor] CGColor]];
     [[button3 layer] setBorderWidth:0.5];
     [button3 setImage:[UIImage imageNamed:@"refresh.png"] forState:UIControlStateNormal];
-    button3.imageEdgeInsets = UIEdgeInsetsMake(3, 30, 3, 30);
+    button3.imageEdgeInsets = UIEdgeInsetsMake(3, 35, 3, 35);
     [self.view addSubview:button3];
 }
 
