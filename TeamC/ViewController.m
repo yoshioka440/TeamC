@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "RequestController.h"
 #import "TemporaryDataManager.h"
+#import "HumanAnnotation.h"
 
 @interface ViewController ()<MKMapViewDelegate, UITextFieldDelegate, CLLocationManagerDelegate>
 
@@ -136,7 +137,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 @end
