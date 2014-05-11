@@ -11,6 +11,8 @@
 #import "TemporaryDataManager.h"
 #import "HumanAnnotation.h"
 
+#import "HumanPlaceRequestController.h"
+
 @interface ViewController ()<MKMapViewDelegate, UITextFieldDelegate, CLLocationManagerDelegate>
 
 
@@ -24,7 +26,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
     RequestController *req = [RequestController new];
     [req RequestStart];
     NSLog(@"%lu", (unsigned long)[TemporaryDataManager sharedManager].latitudeArray.count);
@@ -57,7 +59,7 @@
         //NSLog(@"%f",[[TemporaryDataManager sharedManager].latitudeArray[i] floatValue]);
         //NSLog(@"%f",[[TemporaryDataManager sharedManager].longitudeArray[i] floatValue]);
     }
-
+    
     //[_mapView addAnnotations:annotationArray];
     
     CGFloat buttonY;
@@ -95,6 +97,8 @@
 
 - (void)getHisPlaceStart
 {
+    HumanPlaceRequestController *humanReqController = [[HumanPlaceRequestController alloc]init];
+    self.viewControllerDelegate = humanReqController;
     [self.viewControllerDelegate getHisPlace];
 }
 
@@ -180,7 +184,7 @@
 {
     HumanAnnotation* human = [[HumanAnnotation alloc]init];
     human.coordinate = CLLocationCoordinate2DMake([TemporaryDataManager sharedManager].youLatitude, [TemporaryDataManager sharedManager].youLongitude);
-//    human.image = [UIImage imageNamed:@"human1.png"]; //人のアイコン画像どうやって設定しよう
+    //    human.image = [UIImage imageNamed:@"human1.png"]; //人のアイコン画像どうやって設定しよう
     [_mapView addAnnotation:human];
 }
 

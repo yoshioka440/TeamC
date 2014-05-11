@@ -10,10 +10,24 @@
 #import "TemporaryDataManager.h"
 #import "HumanAnnotation.h"
 
+@interface HumanPlaceRequestController()<ViewControllerDelegate>
+
+@property(nonatomic, strong) ViewController* viewController;
+
+@end
+
 @implementation HumanPlaceRequestController
 
+- (id)init
+{
+    self.viewController = [[ViewController alloc]init];
+    self.viewController.viewControllerDelegate = self;
+    return self;
+}
+
 // リクエストする
--(void)getHisPlace{
+-(void)getHisPlace
+{
     tempdata = [NSMutableData new];
     NSString *urlString = [NSString stringWithFormat:@"http://10.13.37.248:8888/index.php"];
     NSLog(@"%@",urlString);
@@ -28,7 +42,7 @@
         [TemporaryDataManager sharedManager].mailAdress = [NSString stringWithFormat:@"%@",[hisInfo objectForKey:@"mail"]];
         [TemporaryDataManager sharedManager].youLatitude = [[hisInfo objectForKey:@"latitude"]floatValue];
         [TemporaryDataManager sharedManager].youLongitude = [[hisInfo objectForKey:@"longitude"]floatValue];
-   
+        
         NSLog(@"相手の緯度は%f", [TemporaryDataManager sharedManager].youLatitude);    }
 }
 

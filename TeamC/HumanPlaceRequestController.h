@@ -10,7 +10,7 @@
 #import "ViewController.h"
 #import "HumanAnnotation.h"
 
-@interface HumanPlaceRequestController : NSObject<NSURLConnectionDataDelegate, ViewControllerDelegate>{
+@interface HumanPlaceRequestController : NSObject<NSURLConnectionDataDelegate>{
     NSMutableData *tempdata;
     NSMutableArray *adressdata;
 }
