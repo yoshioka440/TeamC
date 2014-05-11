@@ -111,13 +111,7 @@
     [[UIApplication sharedApplication] openURL:url];
 }
 
--(void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation{
-    [TemporaryDataManager sharedManager].meLatitude = newLocation.coordinate.latitude;
-    [TemporaryDataManager sharedManager].meLongitude = newLocation.coordinate.longitude;
-    //NSLog(@"%f",[TemporaryDataManager sharedManager].meLongitude);
-}
-
-
+// カフェのピンを立てる
 -(void)PinOn:(NSString *)title LatitudeSet:(float)latitude LongitudeSet:(float)longitude SubTitleSet:(NSString *)subTitle SampleSet:(NSString *)sample{
     CustomAnnotation* tt = [[CustomAnnotation alloc] init];
     tt.coordinate = CLLocationCoordinate2DMake(latitude, longitude);
@@ -127,14 +121,12 @@
     [_mapView addAnnotation:tt];
 }
 
-
 //相手の位置を表示する
-
 - (void)showHisPlaceAnnotation
 {
     HumanAnnotation* human = [[HumanAnnotation alloc]init];
     human.coordinate = CLLocationCoordinate2DMake([TemporaryDataManager sharedManager].youLatitude, [TemporaryDataManager sharedManager].youLongitude);
-//    human.image = [UIImage imageNamed:@"human1.png"]; //人のアイコン画像どうやって設定しよう
+//    human.image = [UIImage imageNamed:@"human.png"]; //人のアイコン画像どうやって設定しよう
     [_mapView addAnnotation:human];
 }
 
