@@ -8,15 +8,18 @@
 
 #import <Foundation/Foundation.h>
 
-@interface TemporaryDataManager : NSObject
+@interface TemporaryDataManager : NSObject{
+    //float meLatitude,meLongitude;
+}
 +(TemporaryDataManager *)sharedManager;
+
 // GPSの情報を格納
-@property (nonatomic) float meLatitude,meLongitude;
+@property (nonatomic,assign) float meLatitude,meLongitude;
 
 // 電源カフェ情報を格納する配列群
 @property (nonatomic) NSMutableArray *adressArray;
-@property (nonatomic) NSMutableArray *latitudeArray;
-@property (nonatomic) NSMutableArray *longitudeArray;
+@property (nonatomic,copy) NSMutableArray *latitudeArray;
+@property (nonatomic,copy) NSMutableArray *longitudeArray;
 @property (nonatomic) NSMutableArray *titleArray;
 @property (nonatomic) NSMutableArray *url_pc_Array;
 @property (nonatomic) NSMutableArray *tagArray;

@@ -13,8 +13,8 @@
 //ピンの情報を扱うクラスです。
 
 @interface CustomAnnotation : NSObject <MKAnnotation>
-@property (readwrite, nonatomic) CLLocationCoordinate2D coordinate;
-@property (readwrite, nonatomic, strong) NSString* title;
-@property (readwrite, nonatomic, strong) NSString* subtitle;
-@property (readwrite, nonatomic, strong) NSString* sample;
+@property (nonatomic) CLLocationCoordinate2D coordinate;
+@property (nonatomic, copy) NSString* title;
+@property (nonatomic, copy) NSString* subtitle;
+@property (nonatomic, copy) NSString* sample;
 @end
