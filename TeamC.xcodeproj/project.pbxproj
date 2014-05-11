@@ -47,6 +47,7 @@
 		F4AA76E7191F2A5B00DFE1C0 /* UITabBar+FlatUI.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AA76D2191F2A5B00DFE1C0 /* UITabBar+FlatUI.m */; };
 		F4AA76E8191F2A5B00DFE1C0 /* UITableViewCell+FlatUI.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AA76D4191F2A5B00DFE1C0 /* UITableViewCell+FlatUI.m */; };
 		F4AA76E9191F2A5B00DFE1C0 /* UIToolbar+FlatUI.m in Sources */ = {isa = PBXBuildFile; fileRef = F4AA76D6191F2A5B00DFE1C0 /* UIToolbar+FlatUI.m */; };
+		F4AA76FF191F513500DFE1C0 /* 40.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F4AA76FE191F513500DFE1C0 /* 40.jpg */; };
 		F4B13C6B191E0D0D003311A1 /* CustomAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B13C6A191E0D0D003311A1 /* CustomAnnotation.m */; };
 		F4B13C6E191E211B003311A1 /* HumanAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B13C6D191E211B003311A1 /* HumanAnnotation.m */; };
 /* End PBXBuildFile section */
@@ -130,6 +131,7 @@
 		F4AA76D4191F2A5B00DFE1C0 /* UITableViewCell+FlatUI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableViewCell+FlatUI.m"; sourceTree = "<group>"; };
 		F4AA76D5191F2A5B00DFE1C0 /* UIToolbar+FlatUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIToolbar+FlatUI.h"; sourceTree = "<group>"; };
 		F4AA76D6191F2A5B00DFE1C0 /* UIToolbar+FlatUI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIToolbar+FlatUI.m"; sourceTree = "<group>"; };
+		F4AA76FE191F513500DFE1C0 /* 40.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 40.jpg; sourceTree = "<group>"; };
 		F4B13C69191E0D0D003311A1 /* CustomAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomAnnotation.h; sourceTree = "<group>"; };
 		F4B13C6A191E0D0D003311A1 /* CustomAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomAnnotation.m; sourceTree = "<group>"; };
 		F4B13C6C191E211B003311A1 /* HumanAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HumanAnnotation.h; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 		B916DDF7191B621200E62B23 = {
 			isa = PBXGroup;
 			children = (
+				F4AA76FE191F513500DFE1C0 /* 40.jpg */,
 				F4AA76A7191F2A4600DFE1C0 /* gpsIcon.png */,
 				F4AA76A8191F2A4600DFE1C0 /* heart.png */,
 				F4AA76A9191F2A4600DFE1C0 /* human.png */,
@@ -371,6 +374,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B916DE1C191B621300E62B23 /* Images.xcassets in Resources */,
+				F4AA76FF191F513500DFE1C0 /* 40.jpg in Resources */,
 				F4AA76AD191F2A4600DFE1C0 /* human.png in Resources */,
 				F4AA76AB191F2A4600DFE1C0 /* gpsIcon.png in Resources */,
 				F4AA76AE191F2A4600DFE1C0 /* refresh.png in Resources */,

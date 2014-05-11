@@ -22,6 +22,9 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    UIImageView* backImg = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"40.jpg"]];
+    [self.view addSubview:backImg];
+    
     lm = [CLLocationManager new];
     lm.delegate = self;
     lm.desiredAccuracy = kCLLocationAccuracyBest;
