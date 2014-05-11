@@ -25,6 +25,14 @@
     UIImageView* backImg = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"40.jpg"]];
     [self.view addSubview:backImg];
     
+    UILabel* label = [[UILabel alloc]initWithFrame:CGRectMake(10, 30, 300, 150)];
+    label.text = @"電源カフェでミーティング";
+    label.numberOfLines = 0;
+    label.textAlignment = NSTextAlignmentCenter;
+    label.textColor = [UIColor whiteColor];
+    label.font = [UIFont systemFontOfSize:36];
+    [self.view addSubview:label];
+    
     lm = [CLLocationManager new];
     lm.delegate = self;
     lm.desiredAccuracy = kCLLocationAccuracyBest;
