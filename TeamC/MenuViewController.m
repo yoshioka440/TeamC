@@ -8,6 +8,7 @@
 
 #import "MenuViewController.h"
 #import "TemporaryDataManager.h"
+#import "FlatUIKit.h"
 
 @interface MenuViewController (){
     CLLocationManager *lm;
@@ -35,9 +36,17 @@
 }
 
 -(void)NowPlaceButton{
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    button.frame = CGRectMake(10, 10, 100, 100);
+    CGSize screenSize = [[UIScreen mainScreen]bounds].size;
+    CGFloat buttonY;
+    if (screenSize.height == 568) {
+        buttonY = 430;
+    } else if (screenSize.height == 480){
+        buttonY = 380;
+    }
+    FUIButton *button = [[FUIButton alloc]initWithFrame:CGRectMake(0, buttonY, 320, 50)];
+    button.backgroundColor = [UIColor turquoiseColor];
     [button setTitle:@"Start" forState:UIControlStateNormal];
+    button.titleLabel.textColor = [UIColor whiteColor];
     [button addTarget:self action:@selector(ButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:button];
 }
