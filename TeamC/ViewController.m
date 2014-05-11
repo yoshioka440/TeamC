@@ -18,6 +18,10 @@
 @implementation ViewController{
     MKMapView* _mapView;
     UITextField* textField_;
+    UIView *detailView;
+    UILabel *title,*subtitle;
+    UIButton *line,*del;
+    
 }
 
 - (void)viewDidLoad
@@ -52,7 +56,7 @@
         LatitudeSet:[[TemporaryDataManager sharedManager].latitudeArray[i] floatValue]
        LongitudeSet:[[TemporaryDataManager sharedManager].longitudeArray[i] floatValue]
         SubTitleSet:[TemporaryDataManager sharedManager].adressArray[i]
-          SampleSet:[TemporaryDataManager sharedManager].tagArray[i]];
+          SampleSet:[TemporaryDataManager sharedManager].url_pc_Array[i]];
         //NSLog(@"%f",[[TemporaryDataManager sharedManager].latitudeArray[i] floatValue]);
         //NSLog(@"%f",[[TemporaryDataManager sharedManager].longitudeArray[i] floatValue]);
     }
@@ -110,8 +114,8 @@
     [_mapView.userLocation removeObserver:self forKeyPath:@"Location"];
 }
 
-/*-(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation{
-    if (annotation == mapView.userLocation) {
+-(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation{
+    if (![annotation isKindOfClass:[HumanAnnotation class]]) {
         return nil;
     }
     
@@ -123,11 +127,10 @@
         annotationView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier];
     }
     
-    annotationView.canShowCallout = YES;
-    annotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+    annotationView.image = [UIImage imageNamed:@"human.png"];
     annotationView.annotation = annotation;
     return annotationView;
-}*/
+}
 
 - (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views {
     // add detail disclosure button to callout
@@ -138,31 +141,59 @@
 }
 
 -(void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
+    
+    // 詳細画面
     CGRect screenRect = [[UIScreen mainScreen] bounds];
-    UIView *detailView = [UIView new];
+    detailView = [UIView new];
     detailView.frame = CGRectMake(0, screenRect.size.height-100, screenRect.size.width, 100);
     detailView.backgroundColor = [UIColor blackColor];
     [self.view addSubview:detailView];
     
-    
-    UILabel *title = [UILabel new];
+    // 店名
+    title = [UILabel new];
     title.frame = CGRectMake(detailView.frame.origin.x, detailView.frame.origin.y, detailView.frame.size.width, 50);
     title.text = view.annotation.title;
     title.textColor = [UIColor whiteColor];
     title.font = [UIFont systemFontOfSize:15];
     [self.view addSubview:title];
     
-    UILabel *subtitle = [UILabel new];
+    // 住所
+    subtitle = [UILabel new];
     subtitle.frame = CGRectMake(detailView.frame.origin.x, detailView.frame.origin.y+20, detailView.frame.size.width, 50);
     subtitle.text = view.annotation.subtitle;
     subtitle.textColor = [UIColor whiteColor];
     subtitle.font = [UIFont systemFontOfSize:10];
     [self.view addSubview:subtitle];
+    
+    // line投稿
+    line = [UIButton new];
+    line.frame = CGRectMake(screenRect.size.width-100, screenRect.size.height-50, 50, 50);
+    CustomAnnotation *cu =(CustomAnnotation *)view.annotation;
+    NSString *url = cu.link;
+    _linetext = url;
+    NSLog(@"%@",_linetext);
+    [line addTarget:self action:@selector(sendToLineButtonWasTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [line setBackgroundImage:[UIImage imageNamed:@"line.png"] forState:UIControlStateNormal];
+    [self.view addSubview:line];
+    
+    del = [UIButton new];
+    del.frame = CGRectMake(screenRect.size.width-50, screenRect.size.height-50, 50, 50);
+    [del addTarget:self action:@selector(deleteView:) forControlEvents:UIControlEventTouchUpInside];
+    [del setBackgroundImage:[UIImage imageNamed:@"delete.png"] forState:UIControlStateNormal];
+    [self.view addSubview:del];
+}
+
+-(void)deleteView:(id)sender{
+    [detailView removeFromSuperview];
+    [title removeFromSuperview];
+    [subtitle removeFromSuperview];
+    [line removeFromSuperview];
+    [del removeFromSuperview];
 }
 
 ////LINEで送る機能
-- (void)sendToLineButtonWasTapped:(id)sender {
-    NSString *plainString = textField_.text;
+- (void)sendToLineButtonWasTapped:(id)sender{
+    NSString *plainString = _linetext;
     
     // escape
     NSString *contentKey = (__bridge NSString *)CFURLCreateStringByAddingPercentEscapes(
@@ -196,17 +227,42 @@
     tt.coordinate = CLLocationCoordinate2DMake(latitude, longitude);
     tt.title = title;
     tt.subtitle = subTitle;
-    tt.sample = sample;
+    tt.link = sample;
     [_mapView addAnnotation:tt];
 }
 
 //相手の位置を表示する
-- (void)showHisPlaceAnnotation
+-(void)showHisPlaceAnnotation:(NSString *)title LatitudeSet:(float)latitude LongitudeSet:(float)longitude{
+    HumanAnnotation* humanAnnotation = [[HumanAnnotation alloc] init];
+    humanAnnotation.coordinate = CLLocationCoordinate2DMake(latitude, longitude);
+    humanAnnotation.title = @"楠本輝也";
+    [_mapView addAnnotation:humanAnnotation];
+}
+
+// リクエストする
+-(void)getHisPlace
 {
-    HumanAnnotation* human = [[HumanAnnotation alloc]init];
-    human.coordinate = CLLocationCoordinate2DMake([TemporaryDataManager sharedManager].youLatitude, [TemporaryDataManager sharedManager].youLongitude);
-//    human.image = [UIImage imageNamed:@"human.png"]; //人のアイコン画像どうやって設定しよう
-    [_mapView addAnnotation:human];
+    tempdata = [NSMutableData new];
+    NSString *urlString = [NSString stringWithFormat:@"http://10.13.37.248:8888/index.php"];
+    NSLog(@"%@",urlString);
+    NSURL *url = [[NSURL alloc] initWithString:urlString];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    NSData *jsonData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+    //[NSURLConnection connectionWithRequest:request delegate:self];
+    
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingAllowFragments error:nil];
+    for (NSDictionary *hisInfo in dic) {
+        // 情報の格納
+        [TemporaryDataManager sharedManager].mailAdress = [NSString stringWithFormat:@"%@",[hisInfo objectForKey:@"mail"]];
+        [TemporaryDataManager sharedManager].youLatitude = [[hisInfo objectForKey:@"latitude"]floatValue];
+        [TemporaryDataManager sharedManager].youLongitude = [[hisInfo objectForKey:@"longitude"]floatValue];
+        
+        NSLog(@"相手の緯度は%f", [TemporaryDataManager sharedManager].youLatitude);
+        
+        [self showHisPlaceAnnotation:[TemporaryDataManager sharedManager].mailAdress
+                         LatitudeSet:[TemporaryDataManager sharedManager].youLatitude
+                        LongitudeSet:[TemporaryDataManager sharedManager].youLongitude];
+    }
 }
 
 // 自分の現在地を送る(テスト段階では使わない？)
