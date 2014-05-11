@@ -101,23 +101,54 @@
     [_mapView.userLocation removeObserver:self forKeyPath:@"Location"];
 }
 
-- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
-{
-    if (![annotation isKindOfClass:[HumanAnnotation class]]) {
+/*-(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation{
+    if (annotation == mapView.userLocation) {
         return nil;
     }
-    static NSString* reuseId = @"ann";
-    MKAnnotationView* av = (MKAnnotationView *)[_mapView dequeueReusableAnnotationViewWithIdentifier:reuseId];
-    if (av == nil) {
-        av = [[MKAnnotationView alloc]initWithAnnotation:annotation reuseIdentifier:reuseId];
-        av.canShowCallout = YES;
-        av.image = [UIImage imageNamed:@"human.png"];
-    } else {
-        av.annotation = annotation;
+    
+    MKAnnotationView *annotationView;
+    NSString *identifier = @"Pin";
+    annotationView = (MKAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
+    
+    if (annotationView == nil) {
+        annotationView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier];
     }
-    UIButton* detailButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-    av.rightCalloutAccessoryView = detailButton;
-    return av;
+    
+    annotationView.canShowCallout = YES;
+    annotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+    annotationView.annotation = annotation;
+    return annotationView;
+}*/
+
+- (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views {
+    // add detail disclosure button to callout
+    [views enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL* stop) {
+        ((MKAnnotationView*)obj).rightCalloutAccessoryView
+        = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+    }];
+}
+
+-(void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    UIView *detailView = [UIView new];
+    detailView.frame = CGRectMake(0, screenRect.size.height-100, screenRect.size.width, 100);
+    detailView.backgroundColor = [UIColor blackColor];
+    [self.view addSubview:detailView];
+    
+    
+    UILabel *title = [UILabel new];
+    title.frame = CGRectMake(detailView.frame.origin.x, detailView.frame.origin.y, detailView.frame.size.width, 50);
+    title.text = view.annotation.title;
+    title.textColor = [UIColor whiteColor];
+    title.font = [UIFont systemFontOfSize:15];
+    [self.view addSubview:title];
+    
+    UILabel *subtitle = [UILabel new];
+    subtitle.frame = CGRectMake(detailView.frame.origin.x, detailView.frame.origin.y+20, detailView.frame.size.width, 50);
+    subtitle.text = view.annotation.subtitle;
+    subtitle.textColor = [UIColor whiteColor];
+    subtitle.font = [UIFont systemFontOfSize:10];
+    [self.view addSubview:subtitle];
 }
 
 ////LINEで送る機能
