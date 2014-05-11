@@ -207,6 +207,8 @@
                          LatitudeSet:[TemporaryDataManager sharedManager].youLatitude
                         LongitudeSet:[TemporaryDataManager sharedManager].youLongitude];
     }
+    _mapView.centerCoordinate = CLLocationCoordinate2DMake([TemporaryDataManager sharedManager].youLatitude
+, [TemporaryDataManager sharedManager].youLongitude);
 }
 
 // 自分の現在地を送る(テスト段階では使わない？)
