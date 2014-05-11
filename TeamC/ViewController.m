@@ -10,7 +10,6 @@
 #import "RequestController.h"
 #import "TemporaryDataManager.h"
 #import "HumanAnnotation.h"
-#import "FlatUIKit.h"
 
 @interface ViewController ()<MKMapViewDelegate, UITextFieldDelegate, CLLocationManagerDelegate>
 
@@ -75,13 +74,16 @@
     [button1 setImage:[UIImage imageNamed:@"gpsIcon.png"] forState:UIControlStateNormal];
     button1.imageEdgeInsets = UIEdgeInsetsMake(3, 30, 3, 30);
     [self.view addSubview:button1];
+    
     FUIButton* button2 = [[FUIButton alloc]initWithFrame:CGRectMake(107, buttonY, 107, 50)];
     button2.backgroundColor = [UIColor whiteColor];
     [[button2 layer] setBorderColor:[[UIColor asbestosColor] CGColor]];
     [[button2 layer] setBorderWidth:0.5];
     [button2 setImage:[UIImage imageNamed:@"heart.png"] forState:UIControlStateNormal];
     button2.imageEdgeInsets = UIEdgeInsetsMake(3, 30, 3, 30);
+    [button2 addTarget:self action:@selector(getHisPlaceStart) forControlEvents:UIControlEventTouchDown];
     [self.view addSubview:button2];
+    
     FUIButton* button3 = [[FUIButton alloc]initWithFrame:CGRectMake(214, buttonY, 107, 50)];
     button3.backgroundColor = [UIColor whiteColor];
     [[button3 layer] setBorderColor:[[UIColor asbestosColor] CGColor]];
@@ -89,6 +91,11 @@
     [button3 setImage:[UIImage imageNamed:@"refresh.png"] forState:UIControlStateNormal];
     button3.imageEdgeInsets = UIEdgeInsetsMake(3, 30, 3, 30);
     [self.view addSubview:button3];
+}
+
+- (void)getHisPlaceStart
+{
+    [self.viewControllerDelegate getHisPlace];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath

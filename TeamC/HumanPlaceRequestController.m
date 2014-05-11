@@ -8,16 +8,28 @@
 
 #import "HumanPlaceRequestController.h"
 #import "TemporaryDataManager.h"
+#import "HumanAnnotation.h"
 
 @implementation HumanPlaceRequestController
 
 // リクエストする
 -(void)getHisPlace{
     tempdata = [NSMutableData new];
-    NSString *urlString = [NSString stringWithFormat:@"http://10.13.37.248:8888/index.php"]; //localhostだと接続失敗する
+    NSString *urlString = [NSString stringWithFormat:@"http://10.13.37.248:8888/index.php"];
+    NSLog(@"%@",urlString);
     NSURL *url = [[NSURL alloc] initWithString:urlString];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    [NSURLConnection connectionWithRequest:request delegate:self];
+    NSData *jsonData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+    //[NSURLConnection connectionWithRequest:request delegate:self];
+    
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:tempdata options:NSJSONReadingAllowFragments error:nil];
+    for (NSDictionary *hisInfo in dic) {
+        // 情報の格納
+        [TemporaryDataManager sharedManager].mailAdress = [NSString stringWithFormat:@"%@",[hisInfo objectForKey:@"mail"]];
+        [TemporaryDataManager sharedManager].youLatitude = [[hisInfo objectForKey:@"latitude"]floatValue];
+        [TemporaryDataManager sharedManager].youLongitude = [[hisInfo objectForKey:@"longitude"]floatValue];
+   
+        NSLog(@"相手の緯度は%f", [TemporaryDataManager sharedManager].youLatitude);    }
 }
 
 // 自分の現在地を送る(テスト段階では使わない？)
@@ -33,34 +45,5 @@
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [NSURLConnection connectionWithRequest:request delegate:self];
 }
-
-// 通信開始時
--(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data{
-    [tempdata appendData:data];
-}
-
-// 通信失敗時
--(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error{
-    NSLog(@"localhost接続失敗");
-}
-
-// 通信終了時
--(void)connectionDidFinishLoading:(NSURLConnection *)connection{
-    NSLog(@"localhost接続成功");
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:tempdata options:NSJSONReadingAllowFragments error:nil];
-    for (NSDictionary *hisInfo in dic) {
-        // 情報の格納
-        [TemporaryDataManager sharedManager].mailAdress = [NSString stringWithFormat:@"%@",[hisInfo objectForKey:@"mail"]];
-        [TemporaryDataManager sharedManager].youLatitude = [[hisInfo objectForKey:@"latitude"]floatValue];
-        [TemporaryDataManager sharedManager].youLongitude = [[hisInfo objectForKey:@"longitude"]floatValue];
-    }
-    
-    // NSStringでないと、文字が正常に表示出来ない。(テストコード)
-    /*NSString *str = [TemporaryDataManager sharedManager].tagArray[0];
-     NSLog(@"%@",str);
-     */
-    NSLog(@"相手の緯度は%f", [TemporaryDataManager sharedManager].youLatitude);
-}
-
 
 @end
