@@ -11,10 +11,7 @@
 #import "TemporaryDataManager.h"
 #import "HumanAnnotation.h"
 
-#import "HumanPlaceRequestController.h"
-
 @interface ViewController ()<MKMapViewDelegate, UITextFieldDelegate, CLLocationManagerDelegate>
-
 
 @end
 
@@ -75,6 +72,7 @@
     [[button1 layer] setBorderWidth:0.5];
     [button1 setImage:[UIImage imageNamed:@"gpsIcon.png"] forState:UIControlStateNormal];
     button1.imageEdgeInsets = UIEdgeInsetsMake(3, 30, 3, 30);
+    [button1 addTarget:self action:@selector(setGPS) forControlEvents:UIControlEventTouchDown];
     [self.view addSubview:button1];
     
     FUIButton* button2 = [[FUIButton alloc]initWithFrame:CGRectMake(107, buttonY, 107, 50)];
@@ -83,7 +81,7 @@
     [[button2 layer] setBorderWidth:0.5];
     [button2 setImage:[UIImage imageNamed:@"heart.png"] forState:UIControlStateNormal];
     button2.imageEdgeInsets = UIEdgeInsetsMake(3, 30, 3, 30);
-    [button2 addTarget:self action:@selector(getHisPlaceStart) forControlEvents:UIControlEventTouchDown];
+    [button2 addTarget:self action:@selector(getHisPlace) forControlEvents:UIControlEventTouchDown];
     [self.view addSubview:button2];
     
     FUIButton* button3 = [[FUIButton alloc]initWithFrame:CGRectMake(214, buttonY, 107, 50)];
@@ -95,11 +93,11 @@
     [self.view addSubview:button3];
 }
 
-- (void)getHisPlaceStart
+//現在地ボタン
+- (void)setGPS
 {
-    HumanPlaceRequestController *humanReqController = [[HumanPlaceRequestController alloc]init];
-    self.viewControllerDelegate = humanReqController;
-    [self.viewControllerDelegate getHisPlace];
+    _mapView.centerCoordinate = _mapView.userLocation.location.coordinate;
+    //アニメーションほしい
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
@@ -167,7 +165,7 @@
     //NSLog(@"%f",[TemporaryDataManager sharedManager].meLongitude);
 }
 
-
+//ピンを立てる
 -(void)PinOn:(NSString *)title LatitudeSet:(float)latitude LongitudeSet:(float)longitude SubTitleSet:(NSString *)subTitle SampleSet:(NSString *)sample{
     CustomAnnotation* tt = [[CustomAnnotation alloc] init];
     tt.coordinate = CLLocationCoordinate2DMake(latitude, longitude);
@@ -177,17 +175,53 @@
     [_mapView addAnnotation:tt];
 }
 
-
 //相手の位置を表示する
-
-- (void)showHisPlaceAnnotation
-{
-    HumanAnnotation* human = [[HumanAnnotation alloc]init];
-    human.coordinate = CLLocationCoordinate2DMake([TemporaryDataManager sharedManager].youLatitude, [TemporaryDataManager sharedManager].youLongitude);
-    //    human.image = [UIImage imageNamed:@"human1.png"]; //人のアイコン画像どうやって設定しよう
-    [_mapView addAnnotation:human];
+-(void)showHisPlaceAnnotation:(NSString *)title LatitudeSet:(float)latitude LongitudeSet:(float)longitude{
+    HumanAnnotation* humanAnnotation = [[HumanAnnotation alloc] init];
+    humanAnnotation.coordinate = CLLocationCoordinate2DMake(latitude, longitude);
+    humanAnnotation.title = @"楠本輝也";
+    [_mapView addAnnotation:humanAnnotation];
 }
 
+// リクエストする
+-(void)getHisPlace
+{
+    tempdata = [NSMutableData new];
+    NSString *urlString = [NSString stringWithFormat:@"http://10.13.37.248:8888/index.php"];
+    NSLog(@"%@",urlString);
+    NSURL *url = [[NSURL alloc] initWithString:urlString];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    NSData *jsonData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+    //[NSURLConnection connectionWithRequest:request delegate:self];
+    
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingAllowFragments error:nil];
+    for (NSDictionary *hisInfo in dic) {
+        // 情報の格納
+        [TemporaryDataManager sharedManager].mailAdress = [NSString stringWithFormat:@"%@",[hisInfo objectForKey:@"mail"]];
+        [TemporaryDataManager sharedManager].youLatitude = [[hisInfo objectForKey:@"latitude"]floatValue];
+        [TemporaryDataManager sharedManager].youLongitude = [[hisInfo objectForKey:@"longitude"]floatValue];
+        
+        NSLog(@"相手の緯度は%f", [TemporaryDataManager sharedManager].youLatitude);
+        
+        [self showHisPlaceAnnotation:[TemporaryDataManager sharedManager].mailAdress
+                         LatitudeSet:[TemporaryDataManager sharedManager].youLatitude
+                        LongitudeSet:[TemporaryDataManager sharedManager].youLongitude];
+    }
+}
+
+// 自分の現在地を送る(テスト段階では使わない？)
+-(void)sendMyPlace{
+    tempdata = [NSMutableData new];
+    NSString *urlString = [NSString stringWithFormat:@"http://10.13.37.248:8888/insert.php?mail=%@&latitude=%f&longitude=%f",
+                           @"teruyakusumoto@gmail.com",
+                           [TemporaryDataManager sharedManager].meLatitude,
+                           [TemporaryDataManager sharedManager].meLongitude];
+    NSLog(@"%@",urlString);
+    
+    NSURL *url = [[NSURL alloc] initWithString:urlString];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    [NSURLConnection connectionWithRequest:request delegate:self];
+}
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {

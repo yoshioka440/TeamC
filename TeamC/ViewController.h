@@ -12,12 +12,14 @@
 #import "CustomAnnotation.h"
 #import "FlatUIKit.h"
 
-@protocol ViewControllerDelegate <NSObject>
+@protocol ViewControllerDelegate
 - (void)getHisPlace;
 @end
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController<NSURLConnectionDataDelegate>{
+    NSMutableData *tempdata;
+    NSMutableArray *adressdata;
+}
 
-@property (nonatomic, assign) id<ViewControllerDelegate> viewControllerDelegate;
 
 @end

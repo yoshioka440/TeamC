@@ -12,7 +12,9 @@
 
 //待ち合わせ相手の情報を扱うクラスです。
 
-@interface HumanAnnotation : NSObject <MKAnnotation>
+@interface HumanAnnotation : NSObject<MKAnnotation>
 @property (readwrite, nonatomic) CLLocationCoordinate2D coordinate;
 @property (readwrite, nonatomic, strong) NSString* mail;
+
+@property (readwrite, nonatomic, copy) NSString* title;
 @end
