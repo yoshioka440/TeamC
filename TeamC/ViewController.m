@@ -24,8 +24,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
-    
+
     RequestController *req = [RequestController new];
     [req RequestStart];
     NSLog(@"%lu", (unsigned long)[TemporaryDataManager sharedManager].latitudeArray.count);
@@ -127,6 +126,18 @@
     tt.sample = sample;
     [_mapView addAnnotation:tt];
 }
+
+
+//相手の位置を表示する
+
+- (void)showHisPlaceAnnotation
+{
+    HumanAnnotation* human = [[HumanAnnotation alloc]init];
+    human.coordinate = CLLocationCoordinate2DMake([TemporaryDataManager sharedManager].youLatitude, [TemporaryDataManager sharedManager].youLongitude);
+//    human.image = [UIImage imageNamed:@"human1.png"]; //人のアイコン画像どうやって設定しよう
+    [_mapView addAnnotation:human];
+}
+
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
