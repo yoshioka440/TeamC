@@ -10,6 +10,7 @@
 #import "RequestController.h"
 #import "TemporaryDataManager.h"
 #import "HumanAnnotation.h"
+#import "FlatUIKit.h"
 
 @interface ViewController ()<MKMapViewDelegate, UITextFieldDelegate, CLLocationManagerDelegate>
 
@@ -30,25 +31,18 @@
     NSLog(@"%lu", (unsigned long)[TemporaryDataManager sharedManager].latitudeArray.count);
     self.view.backgroundColor = [UIColor clearColor];
     
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    button.backgroundColor = [UIColor whiteColor];
-    button.frame = CGRectMake(50, 500, 220, 50);
-    [button setTitle:@"LINE で送る" forState:UIControlStateNormal];
-    [button addTarget:self
-               action:@selector(sendToLineButtonWasTapped:)
-     forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:button];
+    CGSize screenSize = [[UIScreen mainScreen]bounds].size;
+    CGFloat mapViewHeight;
+    if (screenSize.height == 568) {
+        mapViewHeight = 518;
+    } else if (screenSize.height == 480){
+        mapViewHeight = 430;
+    }
     
-    UITextField *textField = [[UITextField alloc]
-                              initWithFrame:CGRectMake(50, 450, 220, 40)];
-    [textField setBorderStyle:UITextBorderStyleRoundedRect];
-    [self.view addSubview:textField];
-    textField.delegate = self;
-    textField_ = textField;
-    
-    _mapView = [[MKMapView alloc]initWithFrame:self.view.frame];
+    _mapView = [[MKMapView alloc]initWithFrame:CGRectMake(0, 0, 320, mapViewHeight)];
     _mapView.showsUserLocation = YES;
-    // 表示倍率の設定
+    _mapView.delegate = self;
+    
     MKCoordinateSpan span = MKCoordinateSpanMake(0.01, 0.01);
     MKCoordinateRegion region = MKCoordinateRegionMake(_mapView.userLocation.coordinate, span);
     [_mapView setRegion:region animated:YES];
@@ -65,9 +59,36 @@
         //NSLog(@"%f",[[TemporaryDataManager sharedManager].longitudeArray[i] floatValue]);
     }
 
-    
     //[_mapView addAnnotations:annotationArray];
     
+    CGFloat buttonY;
+    if (screenSize.height == 568) {
+        buttonY = 518;
+    } else if (screenSize.height == 480){
+        buttonY = 430;
+    }
+    
+    FUIButton* button1 = [[FUIButton alloc]initWithFrame:CGRectMake(0, buttonY, 107, 50)];
+    button1.buttonColor = [UIColor whiteColor];
+    [[button1 layer] setBorderColor:[[UIColor asbestosColor] CGColor]];
+    [[button1 layer] setBorderWidth:0.5];
+    [button1 setImage:[UIImage imageNamed:@"gpsIcon.png"] forState:UIControlStateNormal];
+    button1.imageEdgeInsets = UIEdgeInsetsMake(3, 30, 3, 30);
+    [self.view addSubview:button1];
+    FUIButton* button2 = [[FUIButton alloc]initWithFrame:CGRectMake(107, buttonY, 107, 50)];
+    button2.backgroundColor = [UIColor whiteColor];
+    [[button2 layer] setBorderColor:[[UIColor asbestosColor] CGColor]];
+    [[button2 layer] setBorderWidth:0.5];
+    [button2 setImage:[UIImage imageNamed:@"heart.png"] forState:UIControlStateNormal];
+    button2.imageEdgeInsets = UIEdgeInsetsMake(3, 30, 3, 30);
+    [self.view addSubview:button2];
+    FUIButton* button3 = [[FUIButton alloc]initWithFrame:CGRectMake(214, buttonY, 107, 50)];
+    button3.backgroundColor = [UIColor whiteColor];
+    [[button3 layer] setBorderColor:[[UIColor asbestosColor] CGColor]];
+    [[button3 layer] setBorderWidth:0.5];
+    [button3 setImage:[UIImage imageNamed:@"refresh.png"] forState:UIControlStateNormal];
+    button3.imageEdgeInsets = UIEdgeInsetsMake(3, 30, 3, 30);
+    [self.view addSubview:button3];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
