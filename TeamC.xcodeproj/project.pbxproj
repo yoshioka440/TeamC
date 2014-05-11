@@ -24,7 +24,6 @@
 		B916DE2D191B621300E62B23 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B916DE2B191B621300E62B23 /* InfoPlist.strings */; };
 		B916DE2F191B621300E62B23 /* TeamCTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B916DE2E191B621300E62B23 /* TeamCTests.m */; };
 		F431F2A4191E65C2006B71E0 /* HumanPlaceRequestController.m in Sources */ = {isa = PBXBuildFile; fileRef = F431F2A3191E65C2006B71E0 /* HumanPlaceRequestController.m */; };
-		F431F2A6191E7FD9006B71E0 /* human1.png in Resources */ = {isa = PBXBuildFile; fileRef = F431F2A5191E7FD9006B71E0 /* human1.png */; };
 		F4B13C6B191E0D0D003311A1 /* CustomAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B13C6A191E0D0D003311A1 /* CustomAnnotation.m */; };
 		F4B13C6E191E211B003311A1 /* HumanAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B13C6D191E211B003311A1 /* HumanAnnotation.m */; };
 /* End PBXBuildFile section */
@@ -65,7 +64,6 @@
 		B916DE2E191B621300E62B23 /* TeamCTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TeamCTests.m; sourceTree = "<group>"; };
 		F431F2A2191E65C2006B71E0 /* HumanPlaceRequestController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HumanPlaceRequestController.h; sourceTree = "<group>"; };
 		F431F2A3191E65C2006B71E0 /* HumanPlaceRequestController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HumanPlaceRequestController.m; sourceTree = "<group>"; };
-		F431F2A5191E7FD9006B71E0 /* human1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = human1.png; sourceTree = "<group>"; };
 		F4B13C69191E0D0D003311A1 /* CustomAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomAnnotation.h; sourceTree = "<group>"; };
 		F4B13C6A191E0D0D003311A1 /* CustomAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomAnnotation.m; sourceTree = "<group>"; };
 		F4B13C6C191E211B003311A1 /* HumanAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HumanAnnotation.h; sourceTree = "<group>"; };
@@ -99,7 +97,6 @@
 		B916DDF7191B621200E62B23 = {
 			isa = PBXGroup;
 			children = (
-				F431F2A5191E7FD9006B71E0 /* human1.png */,
 				B916DE09191B621300E62B23 /* TeamC */,
 				B916DE28191B621300E62B23 /* TeamCTests */,
 				B916DE02191B621200E62B23 /* Frameworks */,
@@ -259,7 +256,6 @@
 				B916DE1C191B621300E62B23 /* Images.xcassets in Resources */,
 				B916DE0E191B621300E62B23 /* InfoPlist.strings in Resources */,
 				B916DE17191B621300E62B23 /* Main.storyboard in Resources */,
-				F431F2A6191E7FD9006B71E0 /* human1.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -411,6 +407,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TeamC/TeamC-Prefix.pch";
 				INFOPLIST_FILE = "TeamC/TeamC-Info.plist";
@@ -425,6 +422,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TeamC/TeamC-Prefix.pch";
 				INFOPLIST_FILE = "TeamC/TeamC-Info.plist";

@@ -14,18 +14,16 @@
 // リクエストする
 -(void)getHisPlace{
     tempdata = [NSMutableData new];
-    NSString *urlString = [NSString stringWithFormat:@"http://localhost:8888/index.php"];
-    NSLog(@"%@",urlString);
-    
+    NSString *urlString = [NSString stringWithFormat:@"http://10.13.37.248:8888/index.php"]; //localhostだと接続失敗する
     NSURL *url = [[NSURL alloc] initWithString:urlString];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [NSURLConnection connectionWithRequest:request delegate:self];
 }
 
-// 自分の現在地を送る
+// 自分の現在地を送る(テスト段階では使わない？)
 -(void)sendMyPlace{
     tempdata = [NSMutableData new];
-    NSString *urlString = [NSString stringWithFormat:@"http://localhost:8888/insert.php?mail=%@&latitude=%f&longitude=%f",
+    NSString *urlString = [NSString stringWithFormat:@"http://10.13.37.248:8888/insert.php?mail=%@&latitude=%f&longitude=%f",
                            @"teruyakusumoto@gmail.com",
                            [TemporaryDataManager sharedManager].meLatitude,
                            [TemporaryDataManager sharedManager].meLongitude];
@@ -43,12 +41,12 @@
 
 // 通信失敗時
 -(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error{
-    NSLog(@"失敗");
+    NSLog(@"localhost接続失敗");
 }
 
 // 通信終了時
 -(void)connectionDidFinishLoading:(NSURLConnection *)connection{
-    NSLog(@"成功");
+    NSLog(@"localhost接続成功");
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:tempdata options:NSJSONReadingAllowFragments error:nil];
     for (NSDictionary *hisInfo in dic) {
         // 情報の格納
@@ -61,6 +59,7 @@
     /*NSString *str = [TemporaryDataManager sharedManager].tagArray[0];
      NSLog(@"%@",str);
      */
+    NSLog(@"相手の緯度は%f", [TemporaryDataManager sharedManager].youLatitude);
 }
 
 
